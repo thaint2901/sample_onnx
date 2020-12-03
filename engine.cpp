@@ -46,10 +46,22 @@ void Engine::_load(const string &path) {
 
 void Engine::_prepare() {
     _context = _engine->createExecutionContext();
-    // _context->setOptimizationProfile(0);
+    _context->setOptimizationProfile(0);
+    cudaStreamCreate(&_stream);
+}
+
+Engine::Engine(const string &engine_path, bool verbose) {
+    Logger logger(verbose);
+    _runtime = createInferRuntime(logger);
+    _load(engine_path);
+    _prepare();
+
+    mInputDims = _engine->getBindingDimensions(0);
+    mOutputDims = _engine->getBindingDimensions(1);
 }
 
 Engine::~Engine() {
+    if (_stream) cudaStreamDestroy(_stream);
     if (_context) _context->destroy();
     if (_engine) _engine->destroy();
     if (_runtime) _runtime->destroy();
@@ -100,6 +112,29 @@ void Engine::save(const string &path) {
     file.write(reinterpret_cast<const char*>(serialized->data()), serialized->size());
 
     serialized->destroy();
+}
+
+void Engine::infer(vector<void *> &buffers, int batch){
+    auto dims = _engine->getBindingDimensions(0);
+    _context->setBindingDimensions(0, Dims4(batch, dims.d[1], dims.d[2], dims.d[3]));
+    _context->enqueueV2(buffers.data(), _stream, nullptr);
+    cudaStreamSynchronize(_stream);
+}
+
+std::vector<float> Engine::processInput(const string &path) {
+    const int inputH = mInputDims.d[2];
+    const int inputW = mInputDims.d[3];
+
+    std::vector<uint8_t> fileData(inputH * inputW);
+    vector<float> data (inputH * inputW);
+    readPGMFile(path, fileData.data(), inputH, inputW);
+    
+    for (int i = 0; i < inputH * inputW; i++)
+    {
+        data[i] = 1.0 - float(fileData[i] / 255.0);
+    }
+
+    return data;
 }
 
 }

@@ -21,8 +21,12 @@ set_target_properties(onnx_trt PROPERTIES
   CUDA_RESOLVE_DEVICE_SYMBOLS ON
 )
 include_directories(${OpenCV_INCLUDE_DIRS})
-target_link_libraries(onnx_trt PUBLIC nvinfer nvonnxparser ${OpenCV_LIBS})
+target_link_libraries(onnx_trt PUBLIC nvinfer nvonnxparser ${OpenCV_LIBS} cuda ${CUDA_LIBRARIES})
 
 add_executable(export export.cpp)
 include_directories(${OpenCV_INCLUDE_DIRS})
 target_link_libraries(export PRIVATE onnx_trt ${OpenCV_LIBS})
+
+add_executable(infer infer.cpp)
+include_directories(${OpenCV_INCLUDE_DIRS})
+target_link_libraries(infer PRIVATE onnx_trt ${OpenCV_LIBS} cuda ${CUDA_LIBRARIES})

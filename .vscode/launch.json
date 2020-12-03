@@ -8,10 +8,10 @@
             "name": "(gdb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "/vscode/sample_onnx/build/export",
+            "program": "/vscode/sample_onnx/build/infer",
             "args": [
-                "/vscode/sample_onnx/pretrained/mnist.onnx",
-                "/vscode/sample_onnx/pretrained/mnist.plan"
+                "/vscode/sample_onnx/pretrained/mnist.plan",
+                "/vscode/sample_onnx/data/9.pgm"
             ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
