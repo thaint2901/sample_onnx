@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/workspace/my_samples/sample_onnx/build",
+  "command": "/usr/bin/g++-7    -g   -o CMakeFiles/sample_onnx.dir/main.cpp.o -c /workspace/my_samples/sample_onnx/main.cpp",
+  "file": "/workspace/my_samples/sample_onnx/main.cpp"
+}
+]
