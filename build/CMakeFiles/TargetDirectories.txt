@@ -1,6 +1,0 @@
-/vscode/sample_onnx/build/CMakeFiles/export.dir
-/vscode/sample_onnx/build/CMakeFiles/rebuild_cache.dir
-/vscode/sample_onnx/build/CMakeFiles/onnx_trt.dir
-/vscode/sample_onnx/build/CMakeFiles/package.dir
-/vscode/sample_onnx/build/CMakeFiles/package_source.dir
-/vscode/sample_onnx/build/CMakeFiles/edit_cache.dir
