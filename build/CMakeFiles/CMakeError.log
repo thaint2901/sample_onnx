@@ -53,3 +53,44 @@ Makefile:121: recipe for target 'cmTC_c6a0b/fast' failed
 make: *** [cmTC_c6a0b/fast] Error 2
 
 
+Determining if the pthread_create exist failed with the following output:
+Change Dir: /vscode/sample_onnx/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/opt/conda/bin/ninja cmTC_96833 
+[1/2] Building CXX object CMakeFiles/cmTC_96833.dir/CheckSymbolExists.cxx.o
+[2/2] Linking CXX executable cmTC_96833
+FAILED: cmTC_96833 
+: && /usr/bin/g++-7     CMakeFiles/cmTC_96833.dir/CheckSymbolExists.cxx.o  -o cmTC_96833   && :
+CMakeFiles/cmTC_96833.dir/CheckSymbolExists.cxx.o: In function `main':
+CheckSymbolExists.cxx:(.text+0x1b): undefined reference to `pthread_create'
+collect2: error: ld returned 1 exit status
+ninja: build stopped: subcommand failed.
+
+File /vscode/sample_onnx/build/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef pthread_create
+  return ((int*)(&pthread_create))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the function pthread_create exists in the pthreads failed with the following output:
+Change Dir: /vscode/sample_onnx/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/opt/conda/bin/ninja cmTC_8d43b 
+[1/2] Building CXX object CMakeFiles/cmTC_8d43b.dir/CheckFunctionExists.cxx.o
+[2/2] Linking CXX executable cmTC_8d43b
+FAILED: cmTC_8d43b 
+: && /usr/bin/g++-7  -DCHECK_FUNCTION_EXISTS=pthread_create   CMakeFiles/cmTC_8d43b.dir/CheckFunctionExists.cxx.o  -o cmTC_8d43b  -lpthreads && :
+/usr/bin/ld: cannot find -lpthreads
+collect2: error: ld returned 1 exit status
+ninja: build stopped: subcommand failed.
+
+

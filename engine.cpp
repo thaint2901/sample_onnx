@@ -49,6 +49,12 @@ void Engine::_prepare() {
     // _context->setOptimizationProfile(0);
 }
 
+Engine::~Engine() {
+    if (_context) _context->destroy();
+    if (_engine) _engine->destroy();
+    if (_runtime) _runtime->destroy();
+}
+
 Engine::Engine(const char *onnx_model, size_t onnx_size, bool verbose, size_t workspace_size){
     
     Logger logger(verbose);
@@ -85,6 +91,15 @@ Engine::Engine(const char *onnx_model, size_t onnx_size, bool verbose, size_t wo
 
     _prepare();
 
+}
+
+void Engine::save(const string &path) {
+    cout << "Writing to " << path << "..." << endl;
+    auto serialized = _engine->serialize();
+    ofstream file(path, ios::out | ios::binary);
+    file.write(reinterpret_cast<const char*>(serialized->data()), serialized->size());
+
+    serialized->destroy();
 }
 
 }

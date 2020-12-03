@@ -1,5 +1,22 @@
 {
     "files.associations": {
-        "iosfwd": "cpp"
+        "iosfwd": "cpp",
+        "iostream": "cpp",
+        "optional": "cpp",
+        "*.cuh": "cpp"
+    },
+    // "cmake.sourceDirectory": "${workspaceFolder}/extras/cppapi",
+    // "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
+    // Tạo args trong khi config
+    "cmake.debugConfig": {
+        "args": [
+            "/vscode/sample_onnx/pretrained/mnist.onnx",
+            "/vscode/sample_onnx/pretrained/mnist.plan"
+        ]
+    },
+
+    // configuration setting, lệnh -D trong cmake
+    "cmake.configureSettings": {
+        "CMAKE_CUDA_FLAGS": "--expt-extended-lambda -std=c++14"
     }
 }

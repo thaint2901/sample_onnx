@@ -17,14 +17,12 @@ add_library(onnx_trt SHARED
   ./engine.h
   ./engine.cpp
 )
-set_target_properties(retinanet PROPERTIES
+set_target_properties(onnx_trt PROPERTIES
   CUDA_RESOLVE_DEVICE_SYMBOLS ON
 )
 include_directories(${OpenCV_INCLUDE_DIRS})
 target_link_libraries(onnx_trt PUBLIC nvinfer nvonnxparser ${OpenCV_LIBS})
 
-add_executable(sample_onnx main.cpp)
-
-set(CPACK_PROJECT_NAME ${PROJECT_NAME})
-set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
-include(CPack)
+add_executable(export export.cpp)
+include_directories(${OpenCV_INCLUDE_DIRS})
+target_link_libraries(export PRIVATE onnx_trt ${OpenCV_LIBS})

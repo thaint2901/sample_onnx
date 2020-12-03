@@ -13,7 +13,7 @@ namespace sample_onnx {
 
 class Engine {
 public:
-    Engine(const string &engine_path, bool verbose=false);
+    // Engine(const string &engine_path, bool verbose=false);
     Engine(const char *onnx_model, size_t onnx_size, bool verbose, size_t workspace_size);
 
     ~Engine();
